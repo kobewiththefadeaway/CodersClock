@@ -1,94 +1,89 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<style>
-body{
-    text-align: center;
-    background: url("https://www.10wallpaper.com/wallpaper/1920x1080/1212/The_doomsday_After_New_York-Aftermath_world_illustrator_wallpaper_1920x1080.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-font-family: monospace;
-font-weight: 100;
-}
-h1{
-color: white;
-font-weight: 100;
-font-size: 40px;
-margin: 40px 0px 20px;
-}
-#clockdiv{
-    font-family: monospace;
-    color: #fff;
-    display: inline-block;
-    font-weight: 100;
-    text-align: center;
-    font-size: 30px;
-}
-#clockdiv > div{
-    padding: 10px;
-    border-radius: 3px;
-    background: #5a5c5c;
-    display: inline-block;
-}
-#clockdiv div > span{
-    padding: 15px;
-    border-radius: 3px;
-    background: #2d2d2d;
-    display: inline-block;
-}
-smalltext{
-    padding-top: 5px;
-    font-size: 16px;
-}
-</style>
+    
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Basic Clock Alarm</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+
+  <style>
+    body {
+      background-image: url(https://resi.ze-robot.com/dl/ma/matrix-falling-code-1280%C3%97800.jpg);
+    }
+  </style>
+
 </head>
+
 <body>
-<h1>Doomsday Clock</h1>
-<div id="clockdiv">
-<div>
-    <span class="days" id="day"></span>
-    <div class="smalltext">Days</div>
-</div>
-<div>
-    <span class="hours" id="hour"></span>
-    <div class="smalltext">Hours</div>
-</div>
-<div>
-    <span class="minutes" id="minute"></span>
-    <div class="smalltext">Minutes</div>
-</div>
-<div>
-    <span class="seconds" id="second"></span>
-    <div class="smalltext">Seconds</div>
-</div>
-</div>
+  <!-- clock face -->
 
-<p id="demo"></p>
+  <div id="clockContainer">
+    <div id="hour"></div>
+    <div id="minute"></div>
+    <div id="second"></div>
+  </div>
 
-<script>
+  <br><br>
+  <hr>
 
-var deadline = new Date("june 25, 2029 00:00:00").getTime();
+  <!-- Day date alarm setting for html -->
 
-var x = setInterval(function() {
+  <input id="alarmTime" type="datetime-local">
+  <button id="alarmButton" onclick="setAlarm(this);">Set Alarm</button>
 
-var now = new Date().getTime();
-var t = deadline - now;
-var days = Math.floor(t / (1000 * 60 * 60 * 24));
-var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
-var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
-var seconds = Math.floor((t % (1000 * 60)) / 1000);
-document.getElementById("day").innerHTML =days ;
-document.getElementById("hour").innerHTML =hours;
-document.getElementById("minute").innerHTML = minutes;
-document.getElementById("second").innerHTML =seconds;
-if (t < 0) {
-        clearInterval(x);
-        document.getElementById("demo").innerHTML = "TIME UP";
-        document.getElementById("day").innerHTML ='0';
-        document.getElementById("hour").innerHTML ='0';
-        document.getElementById("minute").innerHTML ='0' ;
-        document.getElementById("second").innerHTML = '0'; }
-}, 1000);
-</script>
-</body>
-</html>
+  <div id="alarmOptions" style="display: none;">
+    <button onclick="snooze();">Snooze 5 minutes</button>
+    <button onclick="stopAlarm();">Stop Alarm</button>
+  </div>
+  
+<!-- day date alarm setting forjs-->
+  <script type="text/javascript">
+    var alarmSound = new Audio();
+    alarmSound.src = 'https://bigsoundbank.com/UPLOAD/mp3/0229.mp3';
+    
+    var alarmTimer;
+    function setAlarm(button) {
+      var ms = document.getElementById('alarmTime').valueAsNumber;
+      if (isNaN(ms)) {
+        alert('Invalid Date');
+        return;
+      }
+      var alarm = new Date(ms);
+      var alarmTime = new Date(alarm.getUTCFullYear(), alarm.getUTCMonth(), alarm.getUTCDate(), alarm.getUTCHours(), alarm.getUTCMinutes(), alarm.getUTCSeconds());
+      var differenceInMs = alarmTime.getTime() - (new Date()).getTime();
+      if (differenceInMs < 0) {
+        alert('Specified time is already passed');
+        return;
+      }
+      alarmTimer = setTimeout(initAlarm, differenceInMs);
+      button.innerText = 'Cancel Alarm';
+      button.setAttribute('onclick', 'cancelAlarm(this);');
+    };
+
+    function cancelAlarm(button) {
+      clearTimeout(alarmTimer);
+      button.innerText = 'Set Alarm';
+      button.setAttribute('onclick', 'setAlarm(this);')
+    };
+
+    function initAlarm() {
+      alarmSound.play();
+      document.getElementById('alarmOptions').style.display = '';
+    };
+
+    function stopAlarm() {
+      alarmSound.pause();
+      alarmSound.currentTime = 0;
+      document.getElementById('alarmOptions').style.display = 'none';
+      cancelAlarm(document.getElementById('alarmButton'));
+    };
+
+    function snooze() {
+      stopAlarm();
+      alarmTimer = setTimeout(initAlarm, 300000); // 5 * 60 * 1000 = 5 Minutes
+    };
+  </script>
