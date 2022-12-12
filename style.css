@@ -1,6 +1,6 @@
 body {
     background-color: #5383c5;
-    font-family: monospace;
+    font-family:fantasy;
     
   }
   
@@ -11,7 +11,7 @@ body {
     /*to make the height and width responsive*/
     width: 40vw;
     background: url(http://www.clker.com/cliparts/7/4/u/g/O/Y/blue-clock-no-hands-hi.png) no-repeat;
-    /*setting our background image*/
+    /*setting  background image*/
     background-size: 100%;
   }
   
@@ -94,4 +94,9 @@ body {
   
   #alarmButton {
     font-size: 28px;
+  }
+  .title-text {
+  font-size:25px;
+  color: red;
+  position: relative;
   }
