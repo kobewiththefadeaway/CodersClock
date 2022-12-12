@@ -5,14 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Basic Clock Alarm</title>
+    <title>Time To Code Clock</title>
 
     <link rel="stylesheet" href="style.css">
     <script src="main.js"></script>
 
   <style>
     body {
-      background-image: url(https://resi.ze-robot.com/dl/ma/matrix-falling-code-1280%C3%97800.jpg);
+      background-image: url(https://thumbs.gfycat.com/AliveAdmirableEidolonhelvum-max-1mb.gif);
+      background-position: center;
+      background-blend-mode: color-burn;
     }
   </style>
 
@@ -20,6 +22,7 @@
 
 <body>
   <!-- clock face -->
+  <h1 class="title-text">Coder's Clock</element>
 
   <div id="clockContainer">
     <div id="hour"></div>
@@ -30,7 +33,7 @@
   <br><br>
   <hr>
 
-  <!-- Day date alarm setting for html -->
+  <!-- day date alarm setting for html -->
 
   <input id="alarmTime" type="datetime-local">
   <button id="alarmButton" onclick="setAlarm(this);">Set Alarm</button>
@@ -40,7 +43,7 @@
     <button onclick="stopAlarm();">Stop Alarm</button>
   </div>
   
-<!-- day date alarm setting forjs-->
+<!-- day date alarm setting for js-->
   <script type="text/javascript">
     var alarmSound = new Audio();
     alarmSound.src = 'https://bigsoundbank.com/UPLOAD/mp3/0229.mp3';
@@ -81,7 +84,6 @@
       document.getElementById('alarmOptions').style.display = 'none';
       cancelAlarm(document.getElementById('alarmButton'));
     };
-
     function snooze() {
       stopAlarm();
       alarmTimer = setTimeout(initAlarm, 300000); // 5 * 60 * 1000 = 5 Minutes
